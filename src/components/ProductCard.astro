@@ -1,0 +1,24 @@
+---
+import { productEnquiry } from '../data/brands';
+interface Props { slug: string; name: string; brandName: string; brandSlug: string; shortDescription: string; price?: number; inStock: boolean; image: string; }
+const { slug, name, brandName, brandSlug, shortDescription, price, inStock, image } = Astro.props;
+const priceLabel = typeof price === 'number' ? `R${price.toFixed(2)}` : 'Enquire for price';
+---
+<article class="card-lift flex flex-col overflow-hidden rounded-3xl bg-white shadow-[0_14px_44px_-22px_rgba(18,40,74,.3)] hover:shadow-[0_30px_64px_-28px_rgba(18,40,74,.4)]">
+<a href={`/products/${slug}`} class="img-zoom block overflow-hidden" aria-label={name}>
+<img src={image} alt={name} loading="lazy" width="1200" height="800" class="aspect-[4/3] w-full object-cover" />
+</a>
+<div class="flex flex-1 flex-col p-5">
+<p class="eyebrow text-[#69727D]"><a class="hover:underline" href={`/brands/${brandSlug}`}>{brandName}</a></p>
+<h3 class="serif mt-1 text-2xl leading-tight uppercase tracking-[0.03em]"><a href={`/products/${slug}`} class="hover:underline underline-offset-4">{name}</a></h3>
+<p class="mt-2 text-sm leading-relaxed">{shortDescription}</p>
+<div class="mt-4 flex items-center justify-between">
+<p class="text-[15px] font-medium text-[#12284A]">{priceLabel}</p>
+{!inStock && <p class="text-xs font-medium uppercase tracking-wider text-[#69727D]">Out of stock</p>}
+</div>
+<div class="mt-4 flex gap-2">
+<a href={`/products/${slug}`} class="btn-press flex-1 rounded-full border border-[#12284A] px-4 py-2 text-center text-sm font-medium text-[#12284A] hover:bg-[#F5F0E6]">View</a>
+<a href={productEnquiry(name, brandName)} target="_blank" rel="noopener" class="btn-press flex-1 rounded-full bg-[#12284A] px-4 py-2 text-center text-sm font-medium text-white hover:bg-[#0c1c34]">Enquire</a>
+</div>
+</div>
+</article>

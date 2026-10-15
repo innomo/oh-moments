@@ -1,0 +1,61 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { BRANDS, brandBySlug } from '../../data/brands';
+import { getCollection } from 'astro:content';
+
+const all = await getCollection('products');
+const slugOf = (id: string) => id.replace(/\.json$/, '').split('/').pop() as string;
+const cards = all.map(p => ({ slug: slugOf(p.id), name: p.data.name, brand: p.data.brand, brandName: brandBySlug(p.data.brand)?.name ?? p.data.brand, short: p.data.shortDescription, price: p.data.price, inStock: p.data.inStock, image: p.data.images[0] ?? brandBySlug(p.data.brand)?.image ?? '/img/real/hero.jpg' }));
+---
+<Base title="Shop" description="Shop the OH Moments catalogue: Pretty Plate_Co tableware and Moments Touch bleach cleaner. Search and filter by brand, enquire via WhatsApp." path="/products" image="/img/real/tableware.jpg">
+<section class="mx-auto max-w-6xl px-4 pt-12 md:pt-16 pb-6">
+<p class="eyebrow text-[#69727D]">Shop · no checkout — enquire via WhatsApp</p>
+<h1 class="display mt-2 font-semibold">Shop</h1>
+<div class="mt-6 flex flex-col gap-3 sm:flex-row sm:items-center">
+<label class="sr-only" for="q">Search products</label>
+<input id="q" type="search" placeholder="Search — try 'bleach' or 'gold'" class="field w-full sm:max-w-sm rounded-full border border-[#D9C9A5] bg-white px-5 py-2.5 text-sm" />
+<div class="flex flex-wrap gap-2" role="group" aria-label="Filter by brand">
+<button data-f="all" class="fbtn rounded-full bg-[#12284A] px-5 py-2.5 text-xs font-medium uppercase tracking-[0.12em] text-white">All</button>
+{BRANDS.filter(b => b.kind === 'catalogue').map(b => <button data-f={b.slug} class="fbtn rounded-full border border-[#D9C9A5] px-5 py-2.5 text-xs font-medium uppercase tracking-[0.12em] text-[#12284A]">{b.name}</button>)}
+</div>
+</div>
+<p id="count" class="mt-3 text-sm text-[#69727D]" aria-live="polite"></p>
+</section>
+<section class="bg-[#F5F0E6] border-t border-[#D9C9A5]">
+<div id="grid" class="mx-auto max-w-6xl px-4 py-10 md:py-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+{cards.map(c => (
+<div class="pcard" data-brand={c.brand} data-search={`${c.name} ${c.short}`.toLowerCase()}>
+<ProductCard slug={c.slug} name={c.name} brandName={c.brandName} brandSlug={c.brand} shortDescription={c.short} price={c.price} inStock={c.inStock} image={c.image} />
+</div>
+))}
+</div>
+</section>
+</Base>
+<script>
+const q = document.getElementById('q');
+const btns = Array.from(document.querySelectorAll('.fbtn'));
+const cards = Array.from(document.querySelectorAll('.pcard'));
+const count = document.getElementById('count');
+let brand = 'all';
+function apply() {
+const term = (q.value || '').toLowerCase().trim();
+let n = 0;
+cards.forEach((el) => {
+const okB = brand === 'all' || el.dataset.brand === brand;
+const okQ = !term || (el.dataset.search || '').includes(term);
+const show = okB && okQ;
+el.style.display = show ? '' : 'none';
+if (show) n++;
+});
+if (count) count.textContent = n + ' product' + (n === 1 ? '' : 's');
+btns.forEach((b) => {
+const active = b.dataset.f === brand;
+b.classList.toggle('bg-[#12284A]', active);
+b.classList.toggle('text-white', active);
+});
+}
+q?.addEventListener('input', apply);
+btns.forEach((b) => b.addEventListener('click', () => { brand = b.dataset.f || 'all'; apply(); }));
+apply();
+</script>

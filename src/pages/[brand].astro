@@ -1,0 +1,24 @@
+---
+import Base from '../layouts/Base.astro';
+import { BRANDS } from '../data/brands';
+
+// Backwards-compat: old root slugs redirect to /brands/* (no broken inbound links).
+export async function getStaticPaths() {
+  const legacy = BRANDS.map((b) => ({ params: { brand: b.slug }, props: { brand: b } }));
+  legacy.push({ params: { brand: 'blooms-and-occasions' }, props: { brand: BRANDS.find(b => b.slug === 'blooms-and-occasion')! } });
+  legacy.push({ params: { brand: 'blooms' }, props: { brand: BRANDS.find(b => b.slug === 'blooms-and-occasion')! } });
+  return legacy;
+}
+const { brand } = Astro.props;
+const target = `/brands/${brand.slug}`;
+---
+<Base title={brand.name} description={`${brand.name} has moved.`} path={`/${Astro.params.brand}`}>
+<section class="mx-auto max-w-xl px-4 py-20 text-center">
+<p class="eyebrow text-[#69727D]">Moved</p>
+<h1 class="mt-2 text-4xl font-semibold">{brand.name} has a new home</h1>
+<p class="mt-3"><a class="text-[#12284A] underline" href={target}>Continue to {brand.name}</a></p>
+</section>
+<script define:vars={{ target }}>
+window.location.replace(target);
+</script>
+</Base>

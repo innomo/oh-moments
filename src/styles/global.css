@@ -1,0 +1,130 @@
+@import "tailwindcss";
+
+@theme {
+  --color-navy: #12284a;
+  --color-navy-deep: #0c1c34;
+  --color-gold: #b8862f;
+  --color-gold-light: #d4a94a;
+  --color-gold-dark: #8f6620;
+  --color-champagne: #d9c9a5;
+  --color-palegold: #d9c9a5;
+  --color-ivory: #f5f0e6;
+  --color-cream: #f5f0e6;
+  --color-white: #ffffff;
+  --color-text: #27313d;
+  --color-charcoal: #27313d;
+  --color-muted: #69727d;
+  --color-grey: #69727d;
+
+  --font-serif: "Cormorant Garamond", "Georgia", serif;
+  --font-sans: "Roboto", system-ui, -apple-system, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background: #fff;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Navy serif headings by default — explicit text-* utilities always win (hero titles on photos) */
+:where(h1, h2, h3):not([class*="text-"]) {
+  color: var(--color-navy);
+}
+h1, h2, h3, .serif {
+  font-family: var(--font-serif);
+  text-wrap: balance;
+}
+
+.display { font-size: clamp(2.6rem, 6vw, 4.4rem); line-height: 1.02; letter-spacing: 0.02em; text-transform: uppercase; }
+.h2 { font-size: clamp(1.9rem, 3.6vw, 2.7rem); line-height: 1.1; letter-spacing: 0.02em; text-transform: uppercase; }
+
+/* Main titles in caps: never clip or scroll sideways on small phones */
+html, body { overflow-x: clip; }
+main { overflow-wrap: break-word; }
+
+.eyebrow { font-size: 0.72rem; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500; }
+
+.gold-rule { height: 1px; background: linear-gradient(90deg, transparent, var(--color-gold), transparent); }
+
+.metallic-text {
+  background: linear-gradient(120deg, #d4a94a 0%, #b8862f 45%, #8f6620 100%);
+  -webkit-background-clip: text; background-clip: text; color: transparent;
+}
+
+/* Luxury fallback panel (only if a photo is missing — CSS, no illustrations) */
+.lux-panel {
+  background:
+    radial-gradient(120% 90% at 80% 0%, rgba(212, 169, 74, 0.28) 0%, transparent 55%),
+    linear-gradient(135deg, #12284a 0%, #0c1c34 70%);
+}
+
+/* Cropped logo: hides cropped tagline at bottom of supplied PNG */
+.logo-crop { overflow: hidden; aspect-ratio: 1 / 0.82; }
+.logo-crop img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+
+:root {
+  --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
+  --dur-quick: 0.35s;
+  --dur-slow: 0.7s;
+}
+
+a, button, summary, select, input[type="checkbox"], input[type="radio"] { cursor: pointer; }
+
+a, button {
+  transition:
+    color var(--dur-quick) var(--ease-lux),
+    background-color var(--dur-quick) var(--ease-lux),
+    border-color var(--dur-quick) var(--ease-lux),
+    box-shadow var(--dur-quick) var(--ease-lux),
+    transform var(--dur-quick) var(--ease-lux),
+    opacity var(--dur-quick) var(--ease-lux);
+}
+
+/* Border-light lift: soft shadow does the work, movement is GPU transform only */
+.card-lift {
+  transition:
+    transform 0.5s var(--ease-lux),
+    box-shadow 0.5s var(--ease-lux),
+    border-color var(--dur-quick) var(--ease-lux);
+  will-change: transform;
+}
+@media (hover: hover) {
+  .card-lift:hover { transform: translateY(-6px); }
+  .card-lift:active { transform: translateY(-2px); }
+}
+
+/* Cinematic image zoom: slow scale + faint light lift, hover-capable pointers only */
+.img-zoom img {
+  transition: transform var(--dur-slow) var(--ease-lux), filter var(--dur-slow) var(--ease-lux);
+  will-change: transform;
+}
+@media (hover: hover) {
+  .img-zoom:hover img { transform: scale(1.045); filter: brightness(1.04); }
+}
+
+/* Progressive image fade-in (JS adds .fade-img; no-JS stays visible) */
+img.fade-img { opacity: 0; }
+img.fade-img.is-in { opacity: 1; transition: opacity 0.8s var(--ease-lux); }
+
+/* Primary pill press */
+.btn-press:active { transform: translateY(1px) scale(0.99); }
+
+/* Form fields: silky focus glide */
+.field {
+  transition: border-color var(--dur-quick) var(--ease-lux), box-shadow var(--dur-quick) var(--ease-lux), background-color var(--dur-quick) var(--ease-lux);
+}
+.field:focus {
+  border-color: var(--color-gold);
+  box-shadow: 0 0 0 3px rgba(184, 134, 47, 0.18);
+  outline: none;
+}
+
+:focus-visible { outline: 3px solid var(--color-gold); outline-offset: 3px; border-radius: 6px; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; }
+}

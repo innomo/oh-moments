@@ -1,0 +1,44 @@
+---
+import Base from '../layouts/Base.astro';
+import { BRANDS, SITE, whatsappLink } from '../data/brands';
+---
+<Base title="Contact" description="Contact OH Moments: product and bulk enquiries, renovation and solar quotations, curtain and floral bookings." path="/contact" image="/img/real/hero.jpg">
+<section class="mx-auto max-w-3xl px-4 pt-12 md:pt-16 pb-12">
+<p class="eyebrow text-[#69727D]">Contact and quotes</p>
+<h1 class="display mt-2 font-semibold">Let's make a moment</h1>
+<p class="mt-4 leading-relaxed">Product and bulk-order enquiries, renovation and solar quotations (solar subject to confirmation), curtain and blind enquiries, floral and occasion bookings.</p>
+<div class="mt-6 grid gap-4 sm:grid-cols-2">
+<a href={whatsappLink("Hello OH Moments! I'd like to make an enquiry.")} target="_blank" rel="noopener" class="rounded-3xl bg-[#12284A] p-6 text-white hover:bg-[#0c1c34]"><span class="eyebrow text-[#D9C9A5]">Fastest</span><span class="mt-1 block font-medium">WhatsApp: {SITE.whatsappDisplay}</span></a>
+<a href={`mailto:${SITE.email}`} class="rounded-3xl border border-[#D9C9A5] bg-[#F5F0E6] p-6 hover:border-[#B8862F]"><span class="eyebrow text-[#69727D]">Email</span><span class="mt-1 block font-medium text-[#12284A]">{SITE.email}</span></a>
+</div>
+<form action="https://api.web3forms.com/submit" method="POST" class="mt-8 rounded-3xl border border-[#D9C9A5] p-6 sm:p-8">
+<h2 class="serif text-3xl font-semibold">Send an enquiry</h2>
+<input type="hidden" name="access_key" value={SITE.web3formsKey} />
+<input type="hidden" name="subject" value="New OH Moments website enquiry" />
+<input type="hidden" name="from_name" value="OH Moments website" />
+<label class="hidden" aria-hidden="true">Leave empty<input type="checkbox" name="botcheck" tabindex="-1" autocomplete="off" /></label>
+<div class="mt-5 grid gap-4 sm:grid-cols-2">
+<div><label class="text-sm font-medium" for="name">Name</label><input id="name" name="name" required autocomplete="name" class="mt-1 w-full rounded-xl border border-[#D9C9A5] bg-white px-4 py-2.5 text-sm field" /></div>
+<div><label class="text-sm font-medium" for="phone">Phone / WhatsApp</label><input id="phone" name="phone" autocomplete="tel" class="mt-1 w-full rounded-xl border border-[#D9C9A5] bg-white px-4 py-2.5 text-sm field" /></div>
+</div>
+<div class="mt-4"><label class="text-sm font-medium" for="email">Email</label><input id="email" name="email" type="email" required autocomplete="email" class="mt-1 w-full rounded-xl border border-[#D9C9A5] bg-white px-4 py-2.5 text-sm field" /></div>
+<div class="mt-4"><label class="text-sm font-medium" for="brand">Which brand is this about?</label>
+<select id="brand" name="brand" class="mt-1 w-full rounded-xl border border-[#D9C9A5] bg-white px-4 py-2.5 text-sm field bg-white">
+<option value="general">General / not sure yet</option>
+{BRANDS.map(b => <option value={b.slug}>{b.name} — {b.tag}</option>)}
+</select></div>
+<div class="mt-4"><label class="text-sm font-medium" for="message">Message</label><textarea id="message" name="message" rows="5" required class="mt-1 w-full rounded-xl border border-[#D9C9A5] bg-white px-4 py-2.5 text-sm field"></textarea></div>
+<label class="mt-4 flex items-start gap-2 text-xs leading-relaxed text-[#69727D]"><input type="checkbox" required class="mt-0.5" /> I agree that OH Moments may use my details to respond to this enquiry, in line with POPIA.</label>
+<button type="submit" class="mt-5 rounded-full bg-[#12284A] px-8 py-3 text-xs font-medium uppercase tracking-[0.16em] text-white hover:bg-[#0c1c34]">Send enquiry</button>
+</form>
+</section>
+</Base>
+<script>
+const params = new URLSearchParams(window.location.search);
+const want = (params.get('brand') || '').toLowerCase();
+const sel = document.getElementById('brand');
+if (sel && want) {
+const opt = Array.from(sel.options).find(o => o.value === want);
+if (opt) sel.value = want;
+}
+</script>

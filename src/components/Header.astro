@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+import logo from '../assets/logo.png';
+import { BRANDS, SITE } from '../data/brands';
+const links = [
+  { href: '/products', label: 'Shop' },
+  { href: '/', label: 'Home' },
+  { href: '/about', label: 'About' },
+  { href: '/contact', label: 'Contact' },
+];
+---
+<header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-[#D9C9A5]">
+<div class="mx-auto max-w-6xl px-4">
+<div class="flex items-center justify-between gap-4 py-2.5">
+<a href="/" class="flex items-center gap-3" aria-label="OH Moments home">
+<Image src={logo} alt="OH Moments logo" width={120} height={106} format="webp" class="h-11 w-auto rounded-md bg-white" />
+<span class="serif hidden sm:inline text-2xl font-semibold tracking-tight text-[#12284A]">oh <span class="text-[#B8862F]" aria-hidden="true">·</span> moments</span>
+</a>
+<nav class="hidden lg:flex items-center gap-6 text-sm" aria-label="Primary">
+<a href="/products" class="rounded-full bg-[#12284A] px-6 py-2 text-xs font-medium uppercase tracking-[0.18em] text-white hover:bg-[#0c1c34]">Shop</a>
+<a class="uppercase tracking-[0.12em] hover:underline underline-offset-4" href="/brands/pretty-plate">Pretty Plate_Co</a>
+<a class="uppercase tracking-[0.12em] hover:underline underline-offset-4" href="/brands/moments-touch">Moments Touch</a>
+<a class="uppercase tracking-[0.12em] hover:underline underline-offset-4" href="/brands/legae">Legae</a>
+<a class="uppercase tracking-[0.12em] hover:underline underline-offset-4" href="/brands/shaded">Shaded</a>
+<a class="uppercase tracking-[0.12em] hover:underline underline-offset-4" href="/brands/blooms-and-occasion">Blooms and Occasions</a>
+</nav>
+<button id="navBtn" class="lg:hidden rounded border border-[#D9C9A5] px-3 py-2 text-[#12284A]" aria-expanded="false" aria-controls="mobileNav">Menu</button>
+</div>
+</div>
+<nav id="mobileNav" class="lg:hidden hidden border-t border-[#D9C9A5] bg-white" aria-label="Mobile">
+<ul class="px-4 py-3 space-y-1 text-[15px]">
+<li><a class="block py-3 font-medium uppercase tracking-[0.14em] text-[#12284A]" href="/products">Shop</a></li>
+{links.slice(1).map(l => <li><a class="block py-3 uppercase tracking-[0.1em]" href={l.href}>{l.label}</a></li>)}
+{BRANDS.map(b => <li><a class="block py-3 uppercase tracking-[0.1em] text-[#69727D]" href={`/brands/${b.slug}`}>{b.name} — {b.tag}</a></li>)}
+<li class="pt-2"><a class="block rounded-full bg-[#12284A] px-5 py-2.5 text-center text-xs font-medium uppercase tracking-[0.18em] text-white" href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hello OH Moments!')}`}>WhatsApp us</a></li>
+</ul>
+</nav>
+</header>
+<script>
+const btn = document.getElementById('navBtn');
+const nav = document.getElementById('mobileNav');
+btn?.addEventListener('click', () => {
+const open = nav?.classList.toggle('hidden') === false;
+btn.setAttribute('aria-expanded', String(!!open));
+btn.textContent = open ? 'Close' : 'Menu';
+});
+nav?.addEventListener('click', (e) => {
+const a = (e.target as HTMLElement).closest('a');
+if (!a || nav.classList.contains('hidden')) return;
+nav.classList.add('hidden');
+btn?.setAttribute('aria-expanded', 'false');
+if (btn) btn.textContent = 'Menu';
+});
+</script>

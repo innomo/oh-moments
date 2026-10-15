@@ -1,0 +1,61 @@
+---
+import '../styles/global.css';
+import '@fontsource/cormorant-garamond/500.css';
+import '@fontsource/cormorant-garamond/600.css';
+import '@fontsource/cormorant-garamond/500-italic.css';
+import '@fontsource/roboto/400.css';
+import '@fontsource/roboto/500.css';
+import '@fontsource/roboto/700.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+import WhatsAppFloat from '../components/WhatsAppFloat.astro';
+import { SITE } from '../data/brands';
+
+interface Props { title: string; description: string; path?: string; image?: string; }
+const { title, description, path = '/', image = '/img/real/hero.jpg' } = Astro.props;
+const canonical = new URL(path, SITE.domain).toString();
+const ogImage = image.startsWith('http') ? image : new URL(image, SITE.domain).toString();
+const fullTitle = title.includes('OH Moments') ? title : `${title} | OH Moments`;
+---
+<!doctype html>
+<html lang="en-ZA">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>{fullTitle}</title>
+<meta name="description" content={description} />
+<link rel="canonical" href={canonical} />
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="OH Moments" />
+<meta property="og:title" content={fullTitle} />
+<meta property="og:description" content={description} />
+<meta property="og:url" content={canonical} />
+<meta property="og:image" content={ogImage} />
+<meta name="twitter:card" content="summary_large_image" />
+<meta name="twitter:title" content={fullTitle} />
+<meta name="twitter:description" content={description} />
+<meta name="twitter:image" content={ogImage} />
+<script type="application/ld+json" set:html={JSON.stringify({'@context':'https://schema.org','@type':'LocalBusiness',name:'OH Moments',slogan:SITE.tagline,email:SITE.email,telephone:`+${SITE.whatsapp}`,address:{'@type':'PostalAddress',addressLocality:'Johannesburg',addressRegion:'Gauteng',addressCountry:'ZA'},url:SITE.domain,priceRange:'R-RR'})} />
+</head>
+<body class="min-h-screen flex flex-col">
+<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:bg-white focus:px-4 focus:py-2 focus:rounded">Skip to content</a>
+<Header />
+<main id="main" class="flex-1"><slot /></main>
+<Footer />
+<WhatsAppFloat />
+<script>
+// Progressive image fade-in: only touches images still loading; no-JS stays visible.
+const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+if (!reduce) {
+  document.querySelectorAll('main img').forEach((img) => {
+    if (img.complete && img.naturalWidth > 0) return;
+    img.classList.add('fade-img');
+    const show = () => img.classList.add('is-in');
+    img.addEventListener('load', show, { once: true });
+    img.addEventListener('error', show, { once: true });
+  });
+}
+</script>
+</body>
+</html>

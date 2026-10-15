@@ -1,0 +1,17 @@
+---
+import type { Brand } from '../data/brands';
+interface Props { brand: Brand; large?: boolean; }
+const { brand, large = false } = Astro.props;
+---
+<a href={`/brands/${brand.slug}`} class={`card-lift img-zoom group block overflow-hidden rounded-3xl bg-white shadow-[0_14px_44px_-22px_rgba(18,40,74,.35)] hover:shadow-[0_32px_70px_-28px_rgba(18,40,74,.45)] ${large ? 'md:col-span-2 md:grid md:grid-cols-2' : ''}`}>
+<div class="overflow-hidden">
+<img src={brand.image} alt={`${brand.name} — ${brand.tag}`} loading="lazy" width="1200" height="800" class={`w-full object-cover ${large ? 'aspect-[16/10] md:h-full' : 'aspect-[16/10]'}`} />
+</div>
+<div class="p-7 md:p-8">
+<p class="eyebrow text-[#69727D]">{brand.tag}</p>
+<h3 class="serif mt-2 text-3xl font-semibold uppercase tracking-[0.03em]">{brand.name}</h3>
+<div class="gold-rule my-4" aria-hidden="true"></div>
+<p class="text-[15px] leading-relaxed">{brand.blurb}</p>
+<p class="mt-5 text-sm font-medium uppercase tracking-[0.14em] text-[#12284A] group-hover:underline underline-offset-4">Explore {brand.name}</p>
+</div>
+</a>

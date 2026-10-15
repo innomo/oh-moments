@@ -1,0 +1,16 @@
+{
+  "name": "Home-Care Starter Trio",
+  "brand": "moments-touch",
+  "category": "Bundles",
+  "shortDescription": "The complete reset in one thoughtful set — bleach cleaner, surface spray and floor gel, ready to gift or begin.",
+  "description": "Bleach cleaner, surface spray and floor gel in one thoughtful set — made for new homes, seasonal resets and gifts that genuinely help. Enquire for availability and gifting options.",
+  "images": [
+    "/img/real/care-kitchen.jpg"
+  ],
+  "featured": true,
+  "inStock": true,
+  "tags": [
+    "shop"
+  ],
+  "sku": "MT-005"
+}

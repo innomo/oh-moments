@@ -1,0 +1,56 @@
+---
+import Base from '../../layouts/Base.astro';
+import ProductCard from '../../components/ProductCard.astro';
+import { SITE, brandBySlug, productEnquiry } from '../../data/brands';
+import { getCollection } from 'astro:content';
+
+export async function getStaticPaths() {
+  const all = await getCollection('products');
+  return all.map((p) => {
+    const slug = p.id.replace(/\.json$/, '').split('/').pop() as string;
+    return { params: { slug }, props: { entry: p, slug } };
+  });
+}
+const { entry, slug } = Astro.props;
+const b = brandBySlug(entry.data.brand);
+const brandName = b?.name ?? entry.data.brand;
+const hero = entry.data.images[0] ?? b?.image ?? '/img/real/hero.jpg';
+const priceLabel = typeof entry.data.price === 'number' ? `R${entry.data.price.toFixed(2)}` : 'Enquire for price';
+const all = await getCollection('products');
+const related = all.filter(p => p.data.brand === entry.data.brand && p.id !== entry.id).slice(0, 3);
+const rslug = (id: string) => id.replace(/\.json$/, '').split('/').pop() as string;
+const rimg = (id: string, imgs: string[]) => imgs[0] ?? b?.image ?? '/img/real/hero.jpg';
+const jsonld = { '@context': 'https://schema.org', '@type': 'Product', name: entry.data.name, description: entry.data.description, category: entry.data.category, sku: entry.data.sku ?? slug, brand: { '@type': 'Brand', name: brandName }, ...(typeof entry.data.price === 'number' ? { offers: { '@type': 'Offer', priceCurrency: 'ZAR', price: entry.data.price, availability: entry.data.inStock ? 'https://schema.org/InStock' : 'https://schema.org/OutOfStock' } } : {}) };
+---
+<Base title={entry.data.name} description={entry.data.shortDescription} path={`/products/${slug}`} image={hero}>
+<script type="application/ld+json" set:html={JSON.stringify(jsonld)} />
+<section class="mx-auto max-w-6xl px-4 pt-10 md:pt-14 pb-12 grid gap-10 md:grid-cols-2">
+<div>
+<div class="overflow-hidden rounded-[28px] border border-[#D9C9A5] shadow-[0_30px_80px_-40px_rgba(18,40,74,.45)]">
+<img src={hero} alt={entry.data.name} width="1200" height="800" fetchpriority="high" class="aspect-[4/3] w-full object-cover" />
+</div>
+</div>
+<div>
+<p class="eyebrow text-[#69727D]"><a class="hover:underline" href={b ? `/brands/${b.slug}` : '/products'}>{brandName}</a> · {entry.data.category}</p>
+<h1 class="mt-2 text-4xl md:text-5xl font-semibold leading-tight uppercase tracking-[0.02em]">{entry.data.name}</h1>
+<p class="mt-3 text-xl font-medium text-[#12284A]">{priceLabel}</p>
+<p class="mt-4 leading-relaxed">{entry.data.description}</p>
+{entry.data.sku && <p class="mt-3 text-xs uppercase tracking-[0.18em] text-[#69727D]">SKU: {entry.data.sku}</p>}
+<div class="mt-7 flex flex-wrap gap-3">
+<a href={productEnquiry(entry.data.name, brandName)} target="_blank" rel="noopener" class="rounded-full bg-[#12284A] px-8 py-3.5 text-xs font-medium uppercase tracking-[0.16em] text-white hover:bg-[#0c1c34]">Enquire / order via WhatsApp</a>
+<a href="/products" class="rounded-full border border-[#12284A] px-8 py-3.5 text-xs font-medium uppercase tracking-[0.16em] text-[#12284A]">Back to shop</a>
+</div>
+<p class="mt-4 text-sm text-[#69727D]">Bulk order? <a class="text-[#12284A] underline" href={`/contact?brand=${entry.data.brand}`}>Ask about bulk</a> · <a class="text-[#12284A] underline" href={`mailto:${SITE.email}?subject=${encodeURIComponent('Enquiry: ' + entry.data.name)}`}>{SITE.email}</a></p>
+</div>
+</section>
+{related.length > 0 && (
+<section class="bg-[#F5F0E6] border-t border-[#D9C9A5]">
+<div class="mx-auto max-w-6xl px-4 py-12">
+<h2 class="serif text-3xl font-semibold uppercase tracking-[0.03em]">You may also like</h2>
+<div class="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+{related.map(r => <ProductCard slug={rslug(r.id)} name={r.data.name} brandName={brandName} brandSlug={entry.data.brand} shortDescription={r.data.shortDescription} price={r.data.price} inStock={r.data.inStock} image={rimg(r.id, r.data.images)} />)}
+</div>
+</div>
+</section>
+)}
+</Base>

@@ -1,0 +1,23 @@
+{
+  "name": "oh-moments",
+  "version": "1.0.0",
+  "description": "OH Moments — Something your home needs. Johannesburg lifestyle brand.",
+  "type": "module",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "preview": "astro preview"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@astrojs/sitemap": "^3.7.4",
+    "@fontsource/cormorant-garamond": "^5.3.0",
+    "@fontsource/roboto": "^5.3.0",
+    "@tailwindcss/vite": "^4.3.3",
+    "astro": "^7.3.8",
+    "tailwindcss": "^4.3.3"
+  },
+  "main": "index.js"
+}

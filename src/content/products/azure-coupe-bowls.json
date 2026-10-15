@@ -1,0 +1,16 @@
+{
+  "name": "Azure Coupe Bowls - Set of 4",
+  "brand": "pretty-plate",
+  "category": "Tableware",
+  "shortDescription": "Midnight navy outside, molten gold within — four coupe bowls for salads, desserts and delicious contrast.",
+  "description": "Four coupe bowls in deep navy with a warm gold interior — beautiful against fresh salads, rich desserts and morning fruit. A small set with serious presence. Enquire for availability.",
+  "images": [
+    "/img/real/tableware.jpg"
+  ],
+  "featured": true,
+  "inStock": true,
+  "tags": [
+    "shop"
+  ],
+  "sku": "PP-002"
+}

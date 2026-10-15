@@ -1,0 +1,50 @@
+---
+import { BRANDS, SITE } from '../data/brands';
+const hasSocials = SITE.socials.instagram || SITE.socials.facebook || SITE.socials.tiktok;
+---
+<footer class="bg-[#12284A] text-[#D9C9A5]">
+<div class="mx-auto max-w-6xl px-4 py-14 grid gap-10 md:grid-cols-4">
+<div>
+<p class="serif text-2xl text-white">oh <span class="text-[#D4A94A]">·</span> moments</p>
+<p class="eyebrow mt-2 text-[#D9C9A5]/80">{SITE.tagline}</p>
+<p class="mt-4 text-sm leading-relaxed text-[#D9C9A5]/90">Beautifully sourced products. Thoughtfully curated experiences. Moments made memorable.</p>
+</div>
+<nav aria-label="Brands">
+<p class="eyebrow text-[#D9C9A5]/70">Brands</p>
+<ul class="mt-4 space-y-2 text-sm">
+{BRANDS.map(b => <li><a class="uppercase tracking-[0.1em] hover:text-white hover:underline underline-offset-4" href={`/brands/${b.slug}`}>{b.name}</a></li>)}
+<li><a class="hover:text-white" href="/products">Shop all products</a></li>
+</ul>
+</nav>
+<nav aria-label="Explore">
+<p class="eyebrow text-[#D9C9A5]/70">Explore</p>
+<ul class="mt-4 space-y-2 text-sm">
+<li><a class="hover:text-white" href="/">Home</a></li>
+<li><a class="hover:text-white" href="/about">About</a></li>
+<li><a class="hover:text-white" href="/contact">Contact and quotes</a></li>
+<li><a class="hover:text-white" href="/products">Shop catalogue</a></li>
+</ul>
+</nav>
+<div>
+<p class="eyebrow text-[#D9C9A5]/70">Contact</p>
+<ul class="mt-4 space-y-2 text-sm">
+<li>{SITE.location}</li>
+<li><a class="hover:text-white underline underline-offset-4" href={`mailto:${SITE.email}`}>{SITE.email}</a></li>
+<li><a class="hover:text-white underline underline-offset-4" href={`https://wa.me/${SITE.whatsapp}`}>WhatsApp: {SITE.whatsappDisplay}</a></li>
+</ul>
+{hasSocials && (
+<div class="mt-4 flex gap-4 text-sm">
+{SITE.socials.instagram && <a class="underline underline-offset-4 hover:text-white" href={SITE.socials.instagram}>Instagram</a>}
+{SITE.socials.facebook && <a class="underline underline-offset-4 hover:text-white" href={SITE.socials.facebook}>Facebook</a>}
+{SITE.socials.tiktok && <a class="underline underline-offset-4 hover:text-white" href={SITE.socials.tiktok}>TikTok</a>}
+</div>
+)}
+</div>
+</div>
+<div class="border-t border-[#D9C9A5]/25">
+<div class="mx-auto max-w-6xl px-4 py-5 flex flex-col md:flex-row gap-2 items-start md:items-center justify-between text-xs text-[#D9C9A5]/75">
+<p>© {new Date().getFullYear()} OH Moments · {SITE.location} · Photos: Unsplash (free licence)</p>
+<p>OH Moments: making the everyday feel worth remembering.</p>
+</div>
+</div>
+</footer>
