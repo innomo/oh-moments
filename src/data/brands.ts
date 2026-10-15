@@ -9,7 +9,7 @@ export const SITE = {
   whatsapp: '27837046206',
   whatsappDisplay: '083 704 6206',
   location: 'Johannesburg, Gauteng, South Africa',
-  web3formsKey: 'YOUR_WEB3FORMS_KEY', // Paste the live key here — see README
+  web3formsKey: '7a844d54-0390-4285-afca-74ea988d5eed',
   socials: { instagram: '', facebook: '', tiktok: '' }, // blank = hidden, no broken links
 };
 
