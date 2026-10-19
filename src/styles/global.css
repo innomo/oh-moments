@@ -65,6 +65,21 @@ main { overflow-wrap: break-word; }
 .logo-crop { overflow: hidden; aspect-ratio: 1 / 0.82; }
 .logo-crop img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
 
+/* Poster hero logo: monogram + wordmark only; baked-in divider/tagline is hidden
+   (both are re-rendered as crisp HTML below the image) */
+.logo-hero { overflow: hidden; aspect-ratio: 1010 / 808; }
+.logo-hero img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
+
+/* Brand tile strip (home page poster hero) */
+.tile-strip { border-color: color-mix(in srgb, var(--color-champagne) 70%, transparent); }
+.tile-strip li:not(:last-child) { border-right: 1px solid rgba(164, 146, 112, 0.5); }
+.tile-strip img { transition: transform var(--dur-slow) var(--ease-lux); will-change: transform; }
+@media (hover: hover) {
+  .tile-strip a:hover img { transform: scale(1.08); }
+  .tile-strip a:hover .tile-label { color: var(--color-gold-dark); }
+}
+.tile-label { transition: color var(--dur-quick) var(--ease-lux); }
+
 :root {
   --ease-lux: cubic-bezier(0.22, 1, 0.36, 1);
   --dur-quick: 0.35s;
