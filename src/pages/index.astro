@@ -23,39 +23,39 @@ const tileArt: Record<string, { src: string; w: number; h: number }> = {
 ---
 <Base title="OH Moments — Something your home needs" description="OH Moments is a Johannesburg lifestyle destination: Pretty Plate_Co tableware, Moments Touch bleach cleaner, Legae renovations and solar, Shaded curtains and blinds, Blooms flowers and intimate occasions." path="/" image="/img/real/hero.jpg">
 <!-- FRONT PAGE — matches the supplied logo artwork -->
-<section class="bg-white">
-<div class="mx-auto max-w-6xl px-4 pt-10 md:pt-14 text-center">
+<section class="bg-white md:flex md:min-h-[calc(100svh-65px)] md:flex-col md:justify-center">
+<div class="mx-auto max-w-6xl px-4 pt-10 md:pt-6 text-center">
 <h1 class="sr-only">OH Moments — Something your home needs</h1>
-<div class="logo-hero mx-auto w-full max-w-2xl">
-<Image src={logo} alt="OH Moments — gold “Oh” monogram framing a styled bathroom, with navy wordmark" width={1010} height={880} fetchpriority="high" format="webp" widths={[480, 720, 1010]} sizes="(min-width: 768px) 672px, 92vw" class="w-full" />
+<div class="logo-hero mx-auto w-full max-w-2xl md:h-[38svh] md:w-auto md:max-w-none">
+<Image src={logo} alt="OH Moments — gold “Oh” monogram framing a styled bathroom, with navy wordmark" width={1010} height={880} fetchpriority="high" format="webp" widths={[480, 720, 1010]} sizes="(min-width: 768px) 40vw, 92vw" class="w-full" />
 </div>
 <div class="relative mx-auto mt-1 max-w-md" aria-hidden="true">
 <div class="gold-rule"></div>
 <span class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white px-4 text-sm text-[#B8862F]">✦</span>
 </div>
-<p class="mt-3 text-[11px] md:text-sm font-medium uppercase tracking-[0.32em] text-[#8F6620]">Something your home needs</p>
+<p class="mt-3 text-[11px] md:mt-2 md:text-sm font-medium uppercase tracking-[0.32em] text-[#8F6620]">Something your home needs</p>
 </div>
 
 <!-- BRAND STRIP -->
-<div class="mx-auto max-w-6xl px-4 py-10 md:py-14">
+<div class="mx-auto w-full max-w-6xl px-4 py-10 md:py-6 md:pt-7">
 <ul class="tile-strip grid grid-cols-5 bg-white" aria-label="OH Moments brands">
 {BRANDS.map(b => (
 <li class="min-w-0">
 <a href={`/brands/${b.slug}`} class="group block px-1 py-2 text-center md:px-2">
-<div class="relative mx-auto aspect-[25/16]">
+<div class="relative mx-auto aspect-[25/16] md:aspect-auto md:h-[clamp(88px,22svh,144px)]">
   <img src={tileArt[b.slug]?.src ?? b.image} alt={`${b.name} — ${b.tag}`} width={tileArt[b.slug]?.w ?? 600} height={tileArt[b.slug]?.h ?? 800} loading="lazy" class="absolute inset-0 m-auto h-auto w-auto max-h-full max-w-full object-contain" />
 </div>
-<p class="tile-label mx-auto mt-3 text-[8px] font-medium uppercase leading-[1.7] tracking-[0.18em] text-[#12284A] sm:text-[10px] md:text-xs md:leading-normal">{(tileLabels[b.slug] ?? [b.name]).map((line, i, all) => (
+<p class="tile-label mx-auto mt-3 md:mt-2 text-[8px] font-medium uppercase leading-[1.7] tracking-[0.18em] text-[#12284A] sm:text-[10px] md:text-[11px] md:leading-normal">{(tileLabels[b.slug] ?? [b.name]).map((line, i, all) => (
 <span>{line}{i < all.length - 1 && <br />}</span>
 ))}</p>
 </a>
 </li>
 ))}
 </ul>
-<img src="/img/tiles/flourish.webp" alt="" width={408} height={26} loading="lazy" class="mx-auto mt-8 w-56 md:w-72" aria-hidden="true" />
-<div class="mt-6 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
-<a href="/products" class="rounded-full bg-[#12284A] px-8 py-3.5 text-center text-xs font-medium uppercase tracking-[0.18em] text-white hover:bg-[#0c1c34] w-full sm:w-auto">Shop the collections</a>
-<a href={whatsappLink("Hello OH Moments! I'd like to find out more.")} target="_blank" rel="noopener" class="rounded-full border border-[#12284A] px-8 py-3.5 text-center text-xs font-medium uppercase tracking-[0.18em] text-[#12284A] hover:bg-[#F5F0E6] w-full sm:w-auto">WhatsApp us</a>
+<img src="/img/tiles/flourish.webp" alt="" width={408} height={26} loading="lazy" class="mx-auto mt-8 md:mt-4 w-56 md:w-72" aria-hidden="true" />
+<div class="mt-6 md:mt-4 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:justify-center">
+<a href="/products" class="rounded-full bg-[#12284A] px-8 py-3.5 text-center text-xs font-medium uppercase tracking-[0.18em] text-white hover:bg-[#0c1c34] w-full sm:w-auto md:py-3">Shop the collections</a>
+<a href={whatsappLink("Hello OH Moments! I'd like to find out more.")} target="_blank" rel="noopener" class="rounded-full border border-[#12284A] px-8 py-3.5 text-center text-xs font-medium uppercase tracking-[0.18em] text-[#12284A] hover:bg-[#F5F0E6] w-full sm:w-auto md:py-3">WhatsApp us</a>
 </div>
 </div>
 </section>

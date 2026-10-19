@@ -68,6 +68,11 @@ main { overflow-wrap: break-word; }
 /* Poster hero logo: monogram + wordmark only; baked-in divider/tagline is hidden
    (both are re-rendered as crisp HTML below the image) */
 .logo-hero { overflow: hidden; aspect-ratio: 1010 / 808; }
+/* Taller desktop (vh-driven) hero needs a slightly wider crop so the baked-in
+   gold divider still stays hidden — it sits at ~y792 of the source artwork */
+@media (min-width: 768px) {
+  .logo-hero { aspect-ratio: 1010 / 774; }
+}
 .logo-hero img { width: 100%; height: 100%; object-fit: cover; object-position: top center; display: block; }
 
 /* Brand tile strip (home page poster hero) */
