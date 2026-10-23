@@ -20,7 +20,12 @@ const links = [
 <a href="/products" class="rounded-full bg-[#12284A] px-6 py-2 text-xs font-medium uppercase tracking-[0.18em] text-white hover:bg-[#0c1c34]">Shop</a>
 <a class="uppercase tracking-[0.12em] hover:underline underline-offset-4" href="/brands/pretty-plate">Pretty Plate_Co</a>
 <a class="uppercase tracking-[0.12em] hover:underline underline-offset-4" href="/brands/moments-touch">Moments Touch</a>
-<a class="uppercase tracking-[0.12em] hover:underline underline-offset-4" href="/brands/legae">Legae</a>
+<div class="group relative">
+<a class="uppercase tracking-[0.12em] hover:underline underline-offset-4" href="/brands/legae" aria-haspopup="true">Legae</a>
+<div class="invisible opacity-0 group-hover:visible group-hover:opacity-100 group-focus-within:visible group-focus-within:opacity-100 absolute left-0 top-full z-50 min-w-[9rem] rounded-xl border border-[#D9C9A5] bg-white p-2 shadow-lg transition-opacity duration-150">
+<a class="block rounded-lg px-3 py-2 text-[11px] font-medium uppercase tracking-[0.16em] text-[#12284A] hover:bg-[#F5F0E6]" href="/brands/legae#projects">Projects</a>
+</div>
+</div>
 <a class="uppercase tracking-[0.12em] hover:underline underline-offset-4" href="/brands/shaded">Shaded</a>
 <a class="uppercase tracking-[0.12em] hover:underline underline-offset-4" href="/brands/blooms-and-occasion">Blooms and Occasions</a>
 </nav>
@@ -31,7 +36,7 @@ const links = [
 <ul class="px-4 py-3 space-y-1 text-[15px]">
 <li><a class="block py-3 font-medium uppercase tracking-[0.14em] text-[#12284A]" href="/products">Shop</a></li>
 {links.slice(1).map(l => <li><a class="block py-3 uppercase tracking-[0.1em]" href={l.href}>{l.label}</a></li>)}
-{BRANDS.map(b => <li><a class="block py-3 uppercase tracking-[0.1em] text-[#69727D]" href={`/brands/${b.slug}`}>{b.name} — {b.tag}</a></li>)}
+{BRANDS.map(b => [<li><a class="block py-3 uppercase tracking-[0.1em] text-[#69727D]" href={`/brands/${b.slug}`}>{b.name} — {b.tag}</a></li>, b.slug === 'legae' && <li><a class="-mt-2 block pb-3 pl-5 text-[12px] uppercase tracking-[0.14em] text-[#12284A]" href="/brands/legae#projects">Projects — before & after</a></li>])}
 <li class="pt-2"><a class="block rounded-full bg-[#12284A] px-5 py-2.5 text-center text-xs font-medium uppercase tracking-[0.18em] text-white" href={`https://wa.me/${SITE.whatsapp}?text=${encodeURIComponent('Hello OH Moments!')}`}>WhatsApp us</a></li>
 </ul>
 </nav>
