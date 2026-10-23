@@ -26,6 +26,7 @@ export interface Brand {
   offers?: string[];
   galleryNote?: string;
   howTo?: string[];
+  projects?: { title: string; before: string; after: string }[];
 }
 
 export const BRANDS: Brand[] = [
@@ -66,6 +67,18 @@ export const BRANDS: Brand[] = [
       'Send your project details via the quote form or WhatsApp.',
       'We confirm scope and arrange a site visit where needed.',
       'You receive a clear written quotation before any work.',
+    ],
+    projects: [
+      {
+        title: 'Accent feature wall with mirror & lighting',
+        before: '/img/legae/wall-1-before.jpeg',
+        after: '/img/legae/wall-1-after.jpeg',
+      },
+      {
+        title: 'Wall mural — kids\u2019 bedroom',
+        before: '/img/legae/wall-2-before.jpeg',
+        after: '/img/legae/wall-2-after.jpeg',
+      },
     ],
   },
   {
