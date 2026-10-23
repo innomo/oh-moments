@@ -82,12 +82,12 @@ const msg = `Hello OH Moments! I'd like ${isCatalogue ? 'to enquire about ' + br
 <div class="mt-8 grid gap-8 md:grid-cols-2">
 {brand.projects.map(pr => (
 <figure class="card-lift overflow-hidden rounded-[24px] border border-[#D9C9A5] bg-white">
-<div class="grid grid-cols-2 bg-white">
+<div class="grid grid-cols-2">
 <div class="relative">
-<img src={pr.before} alt={`Before — ${pr.title} (as it was)`} width="960" height="1280" loading="lazy" class="h-[280px] md:h-[380px] w-full object-contain" />
+<img src={pr.before} alt={`Before — ${pr.title} (as it was)`} width="960" height="1280" loading="lazy" class="h-[280px] md:h-[380px] w-full object-cover" />
 </div>
 <div class="relative">
-<img src={pr.after} alt={`After — ${pr.title} (transformation by ${brand.name})`} width="1290" height="1086" loading="lazy" class="h-[280px] md:h-[380px] w-full object-contain" />
+<img src={pr.after} alt={`After — ${pr.title} (transformation by ${brand.name})`} width="1290" height="1086" loading="lazy" class="h-[280px] md:h-[380px] w-full object-cover" />
 </div>
 </div>
 <figcaption class="flex flex-wrap items-center justify-between gap-2 border-t border-[#D9C9A5] px-5 py-4">
